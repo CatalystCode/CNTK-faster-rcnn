@@ -1,4 +1,4 @@
-FROM microsoft/cntk:2.2-cpu-python3.5
+FROM microsoft/cntk:2.2-gpu-python3.5-cuda8.0-cudnn6.0
 
 LABEL maintainer "MICROSOFT CORPORATION"
 
@@ -19,3 +19,4 @@ RUN cp /cntk/Examples/Image/Detection/utils/py-faster-rcnn/lib/nms/gpu_nms.cpyth
 RUN cp /cntk/Examples/Image/Detection/utils/py-faster-rcnn/lib/nms/cpu_nms.cpython-35m-x86_64-linux-gnu.so /cntk/Examples/Image/Detection/utils/cython_modules/ 
 
 WORKDIR /cntk/Examples/Image/Detection/FastRCNN
+
