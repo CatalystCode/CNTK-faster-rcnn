@@ -19,3 +19,17 @@ cd /cntk/Examples/Image/Detection/FastRCNN
 python install_data_and_model.py
 ```
 
+Then you can run the example(s):
+
+```
+cd /cntk/Examples/Image/Detection/FastRCNN
+python run_fast_rcnn.py
+```
+
+or
+
+```
+cd /cntk/Examples/Image/Detection/FasterRCNN
+python run_faster_rcnn.py
+```
+
