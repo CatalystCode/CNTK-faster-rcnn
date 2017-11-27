@@ -6,14 +6,14 @@ examples since the base CNTK images require additional setup.
 To use the CPU or GPU image just go into the `cpu` or `gpu` directory and type:
 
 ```
-docker build .
+docker build -f Dockerfile-py3-cpu .
 docker run --rm -it -v `pwd`:`pwd` -w `pwd` hashfrombuild bash
 ```
 
 or (for GPU):
 
 ```
-nvidia-docker build .
+nvidia-docker build -f Dockerfile-py3-gpu .
 nvidia-docker run --rm -it -v `pwd`:`pwd` -w `pwd` hashfrombuild bash
 ```
 
