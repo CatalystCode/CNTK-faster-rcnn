@@ -18,5 +18,5 @@ RUN cp /cntk/Examples/Image/Detection/utils/py-faster-rcnn/lib/utils/cython_bbox
 RUN cp /cntk/Examples/Image/Detection/utils/py-faster-rcnn/lib/nms/gpu_nms.cpython-35m-x86_64-linux-gnu.so /cntk/Examples/Image/Detection/utils/cython_modules/ 
 RUN cp /cntk/Examples/Image/Detection/utils/py-faster-rcnn/lib/nms/cpu_nms.cpython-35m-x86_64-linux-gnu.so /cntk/Examples/Image/Detection/utils/cython_modules/ 
 
-WORKDIR /cntk/Examples/Image/Detection/FastRCNN
+WORKDIR /cntk/Examples/Image/Detection/FasterRCNN
 
