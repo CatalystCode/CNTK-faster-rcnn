@@ -5,13 +5,15 @@ LABEL maintainer "MICROSOFT CORPORATION"
 RUN apt-get update && apt-get install -y --no-install-recommends \
         cmake \
         git \
-        nvidia-cuda-toolkit \
         libopencv-dev \
+        nvidia-cuda-toolkit \
         && \
     apt-get -y autoremove \
         && \
     rm -rf /var/lib/apt/lists/*
 
+COPY train.py /cntk/Examples/Image/Detection/
+COPY predict.py /cntk/Examples/Image/Detection/
 RUN /root/anaconda3/envs/cntk-py35/bin/conda install -y -n cntk-py35 cython boost
 RUN bash -c 'source /cntk/activate-cntk && pip install opencv-python easydict pyyaml dlib'
 RUN bash -c 'source /cntk/activate-cntk && cd /cntk/Examples/Image/Detection/utils && git clone https://github.com/CatalystCode/py-faster-rcnn.git && cd py-faster-rcnn/lib && python setup.py build_ext --inplace'
