@@ -26,9 +26,11 @@ Your custom image directory must be in the [format required by CNTK](https://doc
  └── bz7mfvk1etwl0rzofewu.jpg
  ```
 
- Make sure that the image directory is in your docker container before running the CNTK examples.
+ Make sure that the image directory containing each of the positive, negative, and testImages directories is in your docker container before running the CNTK examples.
 
 ## Using the Images
+
+Make sure that you have sufficient space. The `2.3-cpu-python3.5` image from microsoft/cntk is `~7 GB` and the other image that results is `~6 GB`.
 
 ### CPU
 
@@ -48,27 +50,29 @@ nvidia-docker run --rm -it -v `pwd`:`pwd` -w `pwd` hashfrombuild bash
 
 `train.py` and `predict.py` are located in `/cntk/Examples/Image/Detection`. These scripts remove a lot of manual edits needed for the config files, downloading of models, and setup of annotations necessary to run the [CNTK detection example](https://github.com/Microsoft/CNTK/tree/master/Examples/Image/Detection/FasterRCNN).
 
-## Training and Prediction Script Parameters
+### Training Parameters
 
 | tag                       | value expected      |
 | --------------------------| --------------------|
-| gpu                       | To use `gpu` in either training or prediction, specify `1`. Otherwise, `cpu` will be used. |
-| tagged-images             | Provide a path to the directory containing your custom images prepared for CNTK object detection. The directory should contain information formatted as described [here](https://docs.microsoft.com/en-us/cognitive-toolkit/Object-Detection-using-Fast-R-CNN#train-on-your-own-data). I recommend using the [VoTT tool](https://github.com/Microsoft/VoTT) to create the formatted directory. |
-| num-train                 | The number of training images used to train the model. |
-| num-epochs                | The number of `epochs` used to train the model. One `epoch` is one complete training cycle on the training set. |
-| num-test                  | The number images to test. |
-| model-path                | The path to your trained model. Defaults to `/cntk/Examples/Image/Detection/FasterRCNN/Output/faster_rcnn_eval_AlexNet_e2e.model`. To get a trained model, run `train.py`. The training script will output the directory where your trained model is stored (Usually `/cntk/Examples/Image/Detection/FasterRCNN/Output/faster_rcnn_eval_AlexNet_e2e.model`). |
 | conf-threshold            | The `confidence threshold` used to determine when bounding boxes around detected objects are drawn. A confidence threshold of `0` will draw all bounding boxes determined by CNTK. A threshold of `1` will only draw a bounding box around the exact location you had originally drawn a bounding box, i.e. you trained and tested on the same image. Provide a `float` falling between `0` and `1`. The `default` confidence theshold is `0`. |
+| gpu                       | To use `gpu` in either training or prediction, specify `1`. Otherwise, `cpu` will be used. |
+| model-path                | The path to your trained model. Defaults to `/cntk/Examples/Image/Detection/FasterRCNN/Output/faster_rcnn_eval_AlexNet_e2e.model`. To get a trained model, run `train.py`. The training script will output the directory where your trained model is stored (Usually `/cntk/Examples/Image/Detection/FasterRCNN/Output/faster_rcnn_eval_AlexNet_e2e.model`). |
+| num-epochs                | The number of `epochs` used to train the model. One `epoch` is one complete training cycle on the training set. Defaults to `20`. |
+| num-train                 | The number of training images used to train the model. |
+| num-test                  | The number images to test. |
+| tagged-images             | Provide a path to the directory containing your custom images prepared for CNTK object detection. The directory should contain information formatted as described [here](https://docs.microsoft.com/en-us/cognitive-toolkit/Object-Detection-using-Fast-R-CNN#train-on-your-own-data). I recommend using the [VoTT tool](https://github.com/Microsoft/VoTT) to create the formatted directory. |
 
 ## Run train.py
 
 ```sh
 python train.py
   [--gpu 1]
-  --tagged-images /CustomImages
-  --num-train 200
   [--num-epochs 3]
+  --num-train 200
+  --tagged-images /CustomImages
 ```
+
+**Note:** During training, `Unknown error` and `PROGRESS: 0%` will be outputted to the console. This will _not_ prevent training from making progress and a fitted model will still be outputted.
 
 ### Training Output
 
