@@ -1,10 +1,13 @@
 # CNTK-faster-rcnn
+
 This project aims to help getting started with running the Faster RCNN CNTK
 examples, since the base CNTK images require additional setup.
 
-# Set Up Custom Images for CNTK Object Detection Example
+## Set Up Custom Images for CNTK Object Detection Example
+
 Your custom image directory must be in the [format required by CNTK](https://docs.microsoft.com/en-us/cognitive-toolkit/object-detection-using-fast-r-cnn#train-on-your-own-data). The image directory should be structured as:
-```
+
+```sh
 .
 ├── negative
 │ ├── a0vqvtsowhoubmczrq4q.jpg
@@ -25,20 +28,24 @@ Your custom image directory must be in the [format required by CNTK](https://doc
 
  Make sure that the image directory is in your docker container before running the CNTK examples.
 
-# Using the Images
-## CPU
-```
+## Using the Images
+
+### CPU
+
+```sh
 docker build -f Dockerfile-py3-cpu .
 docker run --rm -it -v `pwd`:`pwd` -w `pwd` hashfrombuild bash
 ```
 
-## GPU
-```
+### GPU
+
+```sh
 nvidia-docker build -f Dockerfile-py3-gpu .
 nvidia-docker run --rm -it -v `pwd`:`pwd` -w `pwd` hashfrombuild bash
 ```
 
-# About train.py and predict.py
+## About train.py and predict.py
+
 `train.py` and `predict.py` are located in `/cntk/Examples/Image/Detection`. These scripts remove a lot of manual edits needed for the config files, downloading of models, and setup of annotations necessary to run the [CNTK detection example](https://github.com/Microsoft/CNTK/tree/master/Examples/Image/Detection/FasterRCNN).
 
 ## Training and Prediction Script Parameters
@@ -54,39 +61,43 @@ nvidia-docker run --rm -it -v `pwd`:`pwd` -w `pwd` hashfrombuild bash
 | conf-threshold            | The `confidence threshold` used to determine when bounding boxes around detected objects are drawn. A confidence threshold of `0` will draw all bounding boxes determined by CNTK. A threshold of `1` will only draw a bounding box around the exact location you had originally drawn a bounding box, i.e. you trained and tested on the same image. Provide a `float` falling between `0` and `1`. The `default` confidence theshold is `0`. |
 
 ## Run train.py
-```
+
+```sh
 python train.py
-  [--gpu 1] 
+  [--gpu 1]
   --tagged-images /CustomImages
-  --num-train 200 
+  --num-train 200
   [--num-epochs 3]
 ```
 
 ### Training Output
 
 After you run training, `/cntk/Examples/Image/Detection/FasterRCNN/Output/` will contain one new item:
+
 * `faster_rcnn_eval_AlexNet_e2e.model` - trained model used as input for predictions
 
 ## Run predict.py
-```
+
+```sh
 python predict.py
-  [--gpu 1] 
-  --tagged-images /CustomImages 
+  [--gpu 1]
+  --tagged-images /CustomImages
   --num-test 5
   [--model-path /cntk/Examples/Image/Detection/FasterRCNN/Output/faster_rcnn_eval_AlexNet_e2e.model]
   [--conf-threshold 0.82]
 ```
 
 ### Prediction Output
-After you run your predictions, `/cntk/Examples/Image/Detection/FasterRCNN/Output/` will contain two new items: 
+
+After you run your predictions, `/cntk/Examples/Image/Detection/FasterRCNN/Output/` will contain two new items:
 
 * `CustomImages directory` - contains custom images with bounding boxes drawn on detected objects
 * `custom_images_output.json` - json output of `bounding boxes`, `confidence levels`, and `class names` for each image
 
 #### custom_images_output.json
 
-```
-{ "images": 
+```sh
+{ "images":
   {
     "/Reverb/labelled-guitars/testImages/adfvzfswiuv0a1erna5k.jpg": {
       "class": "body",
@@ -97,9 +108,9 @@ After you run your predictions, `/cntk/Examples/Image/Detection/FasterRCNN/Outpu
         {"confidence_level": "0.588904", "bounding_box": {"x1": 527, "x2": 780, "y1": 96, "y2": 579}},
         {"confidence_level": "0.743675", "bounding_box": {"x1": 0, "x2": 512, "y1": 196, "y2": 718}}
       ]
-    }, 
+    },
     "/Reverb/labelled-guitars/testImages/aayjfcuulg99o3zpctux.jpg": {
-      "class": "body", 
+      "class": "body",
       "bounding_boxes": [
         {"confidence_level": "0.872948", "bounding_box": {"x1": 79, "x2": 582, "y1": 136, "y2": 764}},
         {"confidence_level": "0.629768", "bounding_box": {"x1": 158, "x2": 594, "y1": 180, "y2": 552}}
