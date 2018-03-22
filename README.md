@@ -15,7 +15,7 @@ A launched container will contain default images of groceries in
 
 ```sh
 git clone https://github.com/CatalystCode/CNTK-faster-rcnn.git
-docker build -f Dockerfile-py3-cpu
+docker build -f Dockerfile-py3-cpu .
 docker run -it hashfrombuild bash
 python train.py \
   --tagged-images /cntk/Examples/Image/DataSets/Grocery/grocery/ \
