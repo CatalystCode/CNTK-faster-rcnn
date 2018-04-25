@@ -7,7 +7,17 @@ since the [base CNTK images](https://hub.docker.com/r/microsoft/cntk/)
 A launched container will contain default images of groceries in
  `/cntk/Examples/Image/DataSets/Grocery/grocery/` with which you can use to train and make bounding box predictions.
 
+
 ## Quickstart with tagged grocery images
+
+RUN in a bash terminal:
+
+```
+> ./scripts/run.sh [cpu, gpu]
+```
+
+* Image Outputs will be available in `./Output/CustomImages` when code finishes
+* Model will be stored in `/cntk/Examples/Image/Detection/FasterRCNN/Output/`
 
 **Note:** During training and testing, `Unknown error` and `PROGRESS: 0%` may
  be outputted to the console. This will _not_ prevent training or testing from
