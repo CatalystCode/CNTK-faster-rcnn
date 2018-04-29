@@ -17,7 +17,7 @@ RUN in a bash terminal:
 ```
 
 * Image Outputs will be available in `./Output/CustomImages` when code finishes
-* Model will be stored in `/cntk/Examples/Image/Detection/FasterRCNN/Output/`
+* Model will be available in `./Output/`
 
 **Note:** During training and testing, `Unknown error` and `PROGRESS: 0%` may
  be outputted to the console. This will _not_ prevent training or testing from
